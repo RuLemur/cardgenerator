@@ -4,7 +4,7 @@ import java.util.Random;
  * Created by RuLemur on 29.10.2017 in 18:55.
  * AccountsValidator
  */
-public class Main {
+public class CardGenerator {
 
     public static final String[] VISA_PREFIX_LIST = new String[]{"4539",
             "4556", "4916", "4532", "4929", "40240071", "4485", "4716", "4"};
@@ -19,7 +19,8 @@ public class Main {
         int randomArrayIndex = (int) Math.floor(Math.random() * prefixList.length);
         String cardNum = prefixList[randomArrayIndex];
         Random random = new Random();
-        int numLength = 15 - cardNum.length();
+        int numLength = 15 - cardNum.length(); // 15 - длинна карты минус контрольное число
+
         for (int i = 0; i < numLength; i++) {
             cardNum += random.nextInt(10);
         }
@@ -27,7 +28,6 @@ public class Main {
         cardNum += digit == 10 ? 0 : digit;
 
         return cardNum;
-
     }
 
     private static int getCheckNumber(String cardNum) { //получаем контрольное число, используя алгоритм Луна
@@ -51,8 +51,7 @@ public class Main {
     }
 
     public static boolean checkCardNumber(String cardNum) {
-        char[] list;
-        list = cardNum.toCharArray();
+        char[] list = cardNum.toCharArray();
         int[] digits = new int[cardNum.length()];
 
         for (int i = 0; i < cardNum.length(); i++) {
@@ -76,7 +75,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String card = generateCardNumber(VISA_PREFIX_LIST);
+        String card = generateCardNumber(SBERBANK_PREFIX_LIST);
         System.out.println(card);
         System.out.println(checkCardNumber(card));
 
